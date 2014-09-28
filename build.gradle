@@ -22,7 +22,7 @@ group= "rreeggkk.github.io.advancedTools" // http://maven.apache.org/guides/mini
 archivesBaseName = "Advanced Tools"
 
 minecraft {
-    version = "1.7.10-10.13.0.1198"
+    version = "1.7.10-10.13.1.1217"
     runDir = "eclipse"
 }
 

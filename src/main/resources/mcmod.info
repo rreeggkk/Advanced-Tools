@@ -1,0 +1,16 @@
+[
+{
+  "modid": "advancedtools",
+  "name": "Advanced Tools",
+  "description": "A new set of tools.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["rreeggkk"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

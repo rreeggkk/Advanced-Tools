@@ -1,3 +1,5 @@
-itemgroup.Advanced Tools=Advanced Tools
+itemGroup.AdvancedTools=Advanced Tools
 
 item.flintPick.name=Flint Pickaxe
+
+tile.advancedCraftingTable.name=Advanced Crafting Table

@@ -16,7 +16,9 @@ import rreeggkk.github.io.advancedTools.common.crafting.AdvancedShapelessOreReci
 import rreeggkk.github.io.advancedTools.common.gui.GuiHandler;
 import rreeggkk.github.io.advancedTools.common.item.tool.ToolMaterials;
 import rreeggkk.github.io.advancedTools.common.item.tool.pickaxe.BasicPickaxe;
-import rreeggkk.github.io.advancedTools.common.util.RecipieRemovalUtil;
+import rreeggkk.github.io.advancedTools.init.BlockBreakLevelModification;
+import rreeggkk.github.io.advancedTools.init.CraftingRecipies;
+import rreeggkk.github.io.advancedTools.init.RecipieRemoval;
 import rreeggkk.github.io.advancedTools.proxy.IProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -43,7 +45,7 @@ public class AdvancedTools {
 	public CustomCreativeTab cTab;
 
 	//Items
-	BasicPickaxe flintPick;
+	public BasicPickaxe flintPick;
 	
 	//Blocks
 	public BlockAdvancedCraftingTable aCTable;
@@ -56,13 +58,7 @@ public class AdvancedTools {
 		GameRegistry.registerItem(flintPick = new BasicPickaxe(ToolMaterials.flint, cTab, "flintPick", "advancedtools:flint_pickaxe"), "flintPick");
 		
 		//Blocks
-		aCTable = new BlockAdvancedCraftingTable(Material.wood);
-		aCTable.setBlockName("advancedCraftingTable");
-		aCTable.setHardness(2.5f);
-		aCTable.setHarvestLevel("axe", 0);
-		aCTable.setCreativeTab(cTab);
-		aCTable.setBlockTextureName("advancedTools:advancedCraftingTable");
-		GameRegistry.registerBlock(aCTable, "advancedCraftingTable");
+		GameRegistry.registerBlock(aCTable = new BlockAdvancedCraftingTable(), "advancedCraftingTable");
 		
 		//Finishing up
 		cTab.setIcon(flintPick);
@@ -71,28 +67,17 @@ public class AdvancedTools {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		RecipieRemovalUtil.removeToolCraftingRecipies();
+		RecipieRemoval.removeToolCraftingRecipies();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 		
-		AdvancedCraftingTableHandler.instance.addShapedRecipe(new ItemStack(flintPick), 
-				" fff ",
-				"f s f",
-				"  s  ",
-				"  s  ",
-				"  s  ",
-				'f', new ItemStack(Items.flint),
-				's', new ItemStack(Items.stick)
-				);
+		CraftingRecipies.initVanillaCraftingTableRecipes();
+		CraftingRecipies.initAdvancedCraftingTableRecipes();
 		
-		System.out.println("Boop " + OreDictionary.getOreName(OreDictionary.getOreID(new ItemStack(Blocks.planks))));
-		
-		AdvancedShapelessOreRecipe s = new AdvancedShapelessOreRecipe(aCTable, new Object[] {"plankWood", "plankWood", "plankWood", "plankWood", "plankWood", "plankWood", "plankWood", "plankWood", "plankWood", "plankWood"});
-		AdvancedCraftingTableHandler.instance.addRecipe(s);
-		//AdvancedCraftingTableHandler.instance.addRecipe(new ItemStack(aCTable), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks), new ItemStack(Blocks.planks));
+		BlockBreakLevelModification.init();
 	}
 
 	private void forceablyLoadTheForgeHooksClassSoThatICanTamperWithBlocks(){

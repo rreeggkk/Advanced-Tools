@@ -102,8 +102,13 @@ public class ContainerAdvancedCraftingTable extends Container {
 			}
 		}
 
+		ItemStack advancedRecipe = AdvancedCraftingTableHandler.instance.findMatchingRecipe(clippedCraftingTable, this.worldObj);
+		if (advancedRecipe != null) {
+			this.craftResult.setInventorySlotContents(0, advancedRecipe);
+			return;
+		}
+	
 		this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(clippedCraftingTable, this.worldObj));
-		this.craftResult.setInventorySlotContents(0, AdvancedCraftingTableHandler.instance.findMatchingRecipe(clippedCraftingTable, this.worldObj));
 		return;
 	}
 

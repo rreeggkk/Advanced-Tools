@@ -18,8 +18,13 @@ public class BlockAdvancedCraftingTable extends Block {
     private IIcon topTexture;
  
     
-	public BlockAdvancedCraftingTable(Material mat) {
-		super(mat);
+	public BlockAdvancedCraftingTable() {
+		super(Material.wood);
+		setBlockName("advancedCraftingTable");
+		setHardness(2.5f);
+		setHarvestLevel("axe", 0);
+		setCreativeTab(AdvancedTools.instance.cTab);
+		setBlockTextureName("advancedTools:advancedCraftingTable");
 	}
 
 	@SideOnly(Side.CLIENT)

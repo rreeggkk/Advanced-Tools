@@ -9,7 +9,7 @@ Progression:
  - (Alloy: Stellite), molybdenum, obsidian
  - (Alloy: Ultimet)
 
-Expected Playthrough order:
+Expected Playthrough order (What you are mining):
  - Flint
  - Stone
  - Coal (Not required: Used for lighting)
@@ -19,4 +19,7 @@ Expected Playthrough order:
  - Iron
  - Titanium
  - Diamond/Cobalt (Either works/Cobalt less rare)
- - Stellite (Alloy of Chromium + Tungsten + Coal)
+ - Chromium + Tungsten (For Stellite)
+ - Stellite (Alloy of Chromium + Tungsten + Coal + Cobalt)
+ - molybdenum, nickel (For Ultimet)
+ - Ultimet (Alloy Chromium + Nickel + Molybdenum + Iron + Tungsten + Cobalt)

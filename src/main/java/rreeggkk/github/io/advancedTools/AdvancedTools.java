@@ -1,25 +1,32 @@
 package rreeggkk.github.io.advancedTools;
 
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.oredict.OreDictionary;
 import rreeggkk.github.io.advancedTools.client.creativetabs.CustomCreativeTab;
+import rreeggkk.github.io.advancedTools.common.blocks.AdvancedBlocks;
+import rreeggkk.github.io.advancedTools.common.blocks.BasicBlock;
 import rreeggkk.github.io.advancedTools.common.blocks.BlockAdvancedCraftingTable;
 import rreeggkk.github.io.advancedTools.common.constants.Constants;
-import rreeggkk.github.io.advancedTools.common.crafting.AdvancedCraftingTableHandler;
-import rreeggkk.github.io.advancedTools.common.crafting.AdvancedShapelessOreRecipe;
 import rreeggkk.github.io.advancedTools.common.gui.GuiHandler;
+import rreeggkk.github.io.advancedTools.common.item.AdvancedItems;
+import rreeggkk.github.io.advancedTools.common.item.BasicItem;
 import rreeggkk.github.io.advancedTools.common.item.tool.ToolMaterials;
 import rreeggkk.github.io.advancedTools.common.item.tool.pickaxe.BasicPickaxe;
+import rreeggkk.github.io.advancedTools.common.util.OreGenData;
+import rreeggkk.github.io.advancedTools.common.world.RreeOreGenerator;
 import rreeggkk.github.io.advancedTools.init.BlockBreakLevelModification;
 import rreeggkk.github.io.advancedTools.init.CraftingRecipies;
 import rreeggkk.github.io.advancedTools.init.RecipieRemoval;
 import rreeggkk.github.io.advancedTools.proxy.IProxy;
+import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -44,24 +51,41 @@ public class AdvancedTools {
 	//Creative Tabs
 	public CustomCreativeTab cTab;
 
-	//Items
-	public BasicPickaxe flintPick;
-	
-	//Blocks
-	public BlockAdvancedCraftingTable aCTable;
+	private OreGenData copperOreGen = new OreGenData(),
+			zincOreGen = new OreGenData();	
+	private RreeOreGenerator oreGenerator = new RreeOreGenerator();
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		cTab = new CustomCreativeTab("AdvancedTools");
 
 		//Items
-		GameRegistry.registerItem(flintPick = new BasicPickaxe(ToolMaterials.flint, cTab, "flintPick", "advancedtools:flint_pickaxe"), "flintPick");
-		
+		GameRegistry.registerItem(AdvancedItems.flintPick = new BasicPickaxe(ToolMaterials.flint, cTab, "flintPick", "flint_pickaxe"), "flintPick");
+		GameRegistry.registerItem(AdvancedItems.ingotCopper = new BasicItem("ingotCopper", "ingotCopper"), "ingotCopper");
+		GameRegistry.registerItem(AdvancedItems.ingotZinc = new BasicItem("ingotZinc", "ingotZinc"), "ingotZinc");
+
 		//Blocks
-		GameRegistry.registerBlock(aCTable = new BlockAdvancedCraftingTable(), "advancedCraftingTable");
-		
+		GameRegistry.registerBlock(AdvancedBlocks.aCTable = new BlockAdvancedCraftingTable(), "advancedCraftingTable");
+		GameRegistry.registerBlock(AdvancedBlocks.oreCopper = new BasicBlock(Material.rock, "oreCopper", "oreCopper"), "oreCopper");
+		GameRegistry.registerBlock(AdvancedBlocks.oreZinc = new BasicBlock(Material.rock, "oreZinc", "oreZinc"), "oreZinc");
+
+		copperOreGen.setBlock(AdvancedBlocks.oreCopper);
+		copperOreGen.setMaxHeight(64);
+		copperOreGen.setMinHeight(0);
+		copperOreGen.setOrePerVein(10);
+		copperOreGen.setVeinPerChunk(3);
+		zincOreGen.setBlock(AdvancedBlocks.oreZinc);
+		zincOreGen.setMaxHeight(64);
+		zincOreGen.setMinHeight(0);
+		zincOreGen.setOrePerVein(10);
+		zincOreGen.setVeinPerChunk(3);
+		oreGenerator.addOreGenToSurface(copperOreGen);
+		oreGenerator.addOreGenToSurface(zincOreGen);
+
+		GameRegistry.registerWorldGenerator(oreGenerator, 1);
+
 		//Finishing up
-		cTab.setIcon(flintPick);
+		cTab.setIcon(AdvancedItems.flintPick);
 		forceablyLoadTheForgeHooksClassSoThatICanTamperWithBlocks();
 	}
 
@@ -73,10 +97,12 @@ public class AdvancedTools {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-		
+
 		CraftingRecipies.initVanillaCraftingTableRecipes();
+		CraftingRecipies.initFurnaceRecipies();
 		CraftingRecipies.initAdvancedCraftingTableRecipes();
-		
+		CraftingRecipies.initOreDict();
+
 		BlockBreakLevelModification.init();
 	}
 

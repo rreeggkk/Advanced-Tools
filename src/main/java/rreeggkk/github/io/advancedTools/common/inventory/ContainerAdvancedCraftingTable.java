@@ -1,10 +1,7 @@
 package rreeggkk.github.io.advancedTools.common.inventory;
 
-import rreeggkk.github.io.advancedTools.AdvancedTools;
-import rreeggkk.github.io.advancedTools.common.crafting.AdvancedCraftingTableHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
@@ -14,6 +11,8 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
+import rreeggkk.github.io.advancedTools.common.blocks.AdvancedBlocks;
+import rreeggkk.github.io.advancedTools.common.crafting.AdvancedCraftingTableHandler;
 
 public class ContainerAdvancedCraftingTable extends Container {
 
@@ -57,7 +56,7 @@ public class ContainerAdvancedCraftingTable extends Container {
 	}
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return this.worldObj.getBlock(this.posX, this.posY, this.posZ) != AdvancedTools.instance.aCTable ? false : player.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
+		return this.worldObj.getBlock(this.posX, this.posY, this.posZ) != AdvancedBlocks.aCTable ? false : player.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
 	}
 
 	@Override

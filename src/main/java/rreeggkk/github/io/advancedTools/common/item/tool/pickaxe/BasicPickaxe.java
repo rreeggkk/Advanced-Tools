@@ -8,6 +8,6 @@ public class BasicPickaxe extends ItemPickaxe {
 		super(toolMaterial);
 		setCreativeTab(cTab);
 		setUnlocalizedName(unLocName);
-		setTextureName(textureLoc);
+		setTextureName("advancedtools:" + textureLoc);
 	}
 }

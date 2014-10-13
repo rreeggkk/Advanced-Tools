@@ -6,4 +6,5 @@ public class Constants {
     public static final String VERSION = "${version}";
 	public static final String CLIENT_PROXY_CLASS = "rreeggkk.github.io.advancedTools.proxy.ClientProxy";
 	public static final String SERVER_PROXY_CLASS = "rreeggkk.github.io.advancedTools.proxy.ServerProxy";
+	public static final String GUI_FACTORY_CLASS = "rreeggkk.github.io.advancedTools.client.gui.config.ConfigGuiFactory";
 }

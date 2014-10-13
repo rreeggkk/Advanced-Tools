@@ -1,19 +1,15 @@
 package rreeggkk.github.io.advancedTools;
 
-import java.util.Random;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.ForgeHooks;
 import rreeggkk.github.io.advancedTools.client.creativetabs.CustomCreativeTab;
 import rreeggkk.github.io.advancedTools.common.blocks.AdvancedBlocks;
 import rreeggkk.github.io.advancedTools.common.blocks.BasicBlock;
 import rreeggkk.github.io.advancedTools.common.blocks.BlockAdvancedCraftingTable;
+import rreeggkk.github.io.advancedTools.common.config.ConfigurationHandler;
 import rreeggkk.github.io.advancedTools.common.constants.Constants;
 import rreeggkk.github.io.advancedTools.common.gui.GuiHandler;
 import rreeggkk.github.io.advancedTools.common.item.AdvancedItems;
@@ -26,7 +22,6 @@ import rreeggkk.github.io.advancedTools.init.BlockBreakLevelModification;
 import rreeggkk.github.io.advancedTools.init.CraftingRecipies;
 import rreeggkk.github.io.advancedTools.init.RecipieRemoval;
 import rreeggkk.github.io.advancedTools.proxy.IProxy;
-import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -37,7 +32,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, dependencies = "required-after:Forge")
+@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, guiFactory = Constants.GUI_FACTORY_CLASS)
 public class AdvancedTools {
 
 	//Mod Instance
@@ -57,6 +52,9 @@ public class AdvancedTools {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+		
+		
 		cTab = new CustomCreativeTab("AdvancedTools");
 
 		//Items
@@ -70,10 +68,10 @@ public class AdvancedTools {
 		GameRegistry.registerBlock(AdvancedBlocks.oreZinc = new BasicBlock(Material.rock, "oreZinc", "oreZinc"), "oreZinc");
 
 		copperOreGen.setBlock(AdvancedBlocks.oreCopper);
-		copperOreGen.setMaxHeight(64);
-		copperOreGen.setMinHeight(0);
-		copperOreGen.setOrePerVein(10);
-		copperOreGen.setVeinPerChunk(3);
+		copperOreGen.setMaxHeight(200);
+		copperOreGen.setMinHeight(30);
+		copperOreGen.setOrePerVein(14);
+		copperOreGen.setVeinPerChunk(20);
 		zincOreGen.setBlock(AdvancedBlocks.oreZinc);
 		zincOreGen.setMaxHeight(64);
 		zincOreGen.setMinHeight(0);

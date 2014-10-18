@@ -1,19 +1,21 @@
 package rreeggkk.github.io.advancedTools.common.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 
 public class OreGenData {
-	
+
 	private int maxHeight = 0;
 	private int minHeight = 0;
 	private int orePerVein = 0;
 	private int veinPerChunk = 0;
 	private Block block;
-	
+	private EnabledType enabledType = EnabledType.DYNAMIC;
+
 	public OreGenData(){}
-	
-	
-	
+
+
+
 	public OreGenData(int maxHeight, int minHeight, int orePerVein, int veinPerChunk, Block block) {
 		this.maxHeight = maxHeight;
 		this.minHeight = minHeight;
@@ -21,9 +23,22 @@ public class OreGenData {
 		this.veinPerChunk = veinPerChunk;
 		this.block = block;
 	}
+	
+	public OreGenData(int maxHeight, int minHeight, int orePerVein, int veinPerChunk, Block block, EnabledType enabledType) {
+		this.maxHeight = maxHeight;
+		this.minHeight = minHeight;
+		this.orePerVein = orePerVein;
+		this.veinPerChunk = veinPerChunk;
+		this.block = block;
+		this.enabledType = enabledType;
+	}
 
-
-
+	public EnabledType getEnabledType() {
+		return enabledType;
+	}
+	public void setEnabledType(EnabledType enabledType) {
+		this.enabledType = enabledType;
+	}
 	public int getMaxHeight() {
 		return maxHeight;
 	}
@@ -53,5 +68,19 @@ public class OreGenData {
 	}
 	public void setBlock(Block block) {
 		this.block = block;
+	}
+
+	public enum EnabledType {
+		DISABLED, DYNAMIC, ALWAYS_ENABLED;
+		
+		public static String[] getStringValues() {
+			String[] result = new String[values().length];
+			
+			for (int i = 0; i<result.length; i++) {
+				result[i] = values()[i].toString();
+			}
+			
+			return result;
+		}
 	}
 }

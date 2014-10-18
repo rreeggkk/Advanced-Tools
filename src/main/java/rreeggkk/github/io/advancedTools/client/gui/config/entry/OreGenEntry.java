@@ -32,8 +32,8 @@ public class OreGenEntry extends CategoryEntry {
 				list, 
 				this.owningScreen.modID,
 				ConfigurationHandler.CATEGORY_OREGEN,
-				this.configElement.requiresWorldRestart() || this.owningScreen.allRequireWorldRestart, 
-				this.configElement.requiresMcRestart() || this.owningScreen.allRequireMcRestart,
+				true, 
+				true,
 				I18n.format("advancedTools.configGui.advancedTools"),
 				I18n.format("advancedTools.configGui.advancedToolsOreGen"));
 	}

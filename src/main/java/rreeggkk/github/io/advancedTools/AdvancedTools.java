@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.oredict.OreDictionary;
 import rreeggkk.github.io.advancedTools.client.creativetabs.CustomCreativeTab;
 import rreeggkk.github.io.advancedTools.common.blocks.AdvancedBlocks;
 import rreeggkk.github.io.advancedTools.common.blocks.BasicBlock;
@@ -17,6 +18,7 @@ import rreeggkk.github.io.advancedTools.common.item.BasicItem;
 import rreeggkk.github.io.advancedTools.common.item.tool.ToolMaterials;
 import rreeggkk.github.io.advancedTools.common.item.tool.pickaxe.BasicPickaxe;
 import rreeggkk.github.io.advancedTools.common.util.OreGenData;
+import rreeggkk.github.io.advancedTools.common.util.OreGenData.EnabledType;
 import rreeggkk.github.io.advancedTools.common.world.RreeOreGenerator;
 import rreeggkk.github.io.advancedTools.init.BlockBreakLevelModification;
 import rreeggkk.github.io.advancedTools.init.CraftingRecipies;
@@ -47,7 +49,6 @@ public class AdvancedTools {
 	//Creative Tabs
 	public CustomCreativeTab cTab;
 
-	private OreGenData zincOreGen = new OreGenData();	
 	private RreeOreGenerator oreGenerator = new RreeOreGenerator();
 
 	@EventHandler
@@ -59,27 +60,20 @@ public class AdvancedTools {
 		GameRegistry.registerItem(AdvancedItems.flintPick = new BasicPickaxe(ToolMaterials.flint, cTab, "flintPick", "flint_pickaxe"), "flintPick");
 		GameRegistry.registerItem(AdvancedItems.ingotCopper = new BasicItem("ingotCopper", "ingotCopper"), "ingotCopper");
 		GameRegistry.registerItem(AdvancedItems.ingotZinc = new BasicItem("ingotZinc", "ingotZinc"), "ingotZinc");
+		GameRegistry.registerItem(AdvancedItems.ingotTin = new BasicItem("ingotTin", "ingotTin"), "ingotTin");
+		GameRegistry.registerItem(AdvancedItems.ingotNickel = new BasicItem("ingotNickel", "ingotNickel"), "ingotNickel");
 
 		//Blocks
 		GameRegistry.registerBlock(AdvancedBlocks.aCTable = new BlockAdvancedCraftingTable(), "advancedCraftingTable");
 		GameRegistry.registerBlock(AdvancedBlocks.oreCopper = new BasicBlock(Material.rock, "oreCopper", "oreCopper"), "oreCopper");
 		GameRegistry.registerBlock(AdvancedBlocks.oreZinc = new BasicBlock(Material.rock, "oreZinc", "oreZinc"), "oreZinc");
+		GameRegistry.registerBlock(AdvancedBlocks.oreTin = new BasicBlock(Material.rock, "oreTin", "oreTin"), "oreTin");
+		GameRegistry.registerBlock(AdvancedBlocks.oreNickel = new BasicBlock(Material.rock, "oreNickel", "oreNickel"), "oreNickel");
 
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 		
 		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
-
-		zincOreGen.setBlock(AdvancedBlocks.oreZinc);
-		zincOreGen.setMaxHeight(64);
-		zincOreGen.setMinHeight(0);
-		zincOreGen.setOrePerVein(10);
-		zincOreGen.setVeinPerChunk(3);
 		
-		oreGenerator.addOreGenToSurface(ConfigurationHandler.copperOreGen);
-		oreGenerator.addOreGenToSurface(zincOreGen);
-
-		GameRegistry.registerWorldGenerator(oreGenerator, 1);
-
 		//Finishing up
 		cTab.setIcon(AdvancedItems.flintPick);
 		forceablyLoadTheForgeHooksClassSoThatICanTamperWithBlocks();
@@ -93,16 +87,34 @@ public class AdvancedTools {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-
+		
 		CraftingRecipies.initVanillaCraftingTableRecipes();
 		CraftingRecipies.initFurnaceRecipies();
 		CraftingRecipies.initAdvancedCraftingTableRecipes();
 		CraftingRecipies.initOreDict();
 
 		BlockBreakLevelModification.init();
+
+		//oreGenerator.addOreGenToSurface(ConfigurationHandler.copperOreGen);
+		//oreGenerator.addOreGenToSurface(ConfigurationHandler.zincOreGen);
+		//oreGenerator.addOreGenToSurface(ConfigurationHandler.tinOreGen);
+		//oreGenerator.addOreGenToSurface(ConfigurationHandler.nickelOreGen);
+		addOreGenToSurface(ConfigurationHandler.copperOreGen);
+		addOreGenToSurface(ConfigurationHandler.zincOreGen);
+		addOreGenToSurface(ConfigurationHandler.tinOreGen);
+		addOreGenToSurface(ConfigurationHandler.nickelOreGen);
+
+		GameRegistry.registerWorldGenerator(oreGenerator, 1);
 	}
 
 	private void forceablyLoadTheForgeHooksClassSoThatICanTamperWithBlocks(){
 		ForgeHooks.isToolEffective(new ItemStack(Items.wooden_axe), Blocks.log, 0);
+	}
+	
+	private void addOreGenToSurface(OreGenData data) {
+		if (data.getEnabledType() == EnabledType.DISABLED || (data.getEnabledType() == EnabledType.DYNAMIC && OreDictionary.getOreIDs(new ItemStack(data.getBlock())).length > 1)) {
+			return;
+		}
+		oreGenerator.addOreGenToSurface(data);
 	}
 }	

@@ -50,6 +50,8 @@ public class CraftingRecipies {
 	public static void initOreDict() {
 		OreDictionary.registerOre("oreCopper", AdvancedBlocks.oreCopper);
 		OreDictionary.registerOre("oreZinc", AdvancedBlocks.oreZinc);
+		OreDictionary.registerOre("oreTin", AdvancedBlocks.oreTin);
+		OreDictionary.registerOre("oreNickel", AdvancedBlocks.oreNickel);
 	}
 	public static void initFurnaceRecipies() {
 		GameRegistry.addSmelting(AdvancedBlocks.oreCopper, new ItemStack(AdvancedItems.ingotCopper), 0.5f);

@@ -1,10 +1,21 @@
 itemGroup.AdvancedTools=Advanced Tools
 
 advancedTools.configGui.advancedTools=Advanced Tools Configuration
-advancedTools.configGui.advancedToolsOreGen=Advanced Tools Ore Gen Configuration
+
+advancedTools.configGui.advancedToolsOreGen=Ore Gen
+advancedTools.configGui.advancedToolsOreGen.copper=Copper
+advancedTools.configGui.advancedToolsOreGen.zinc=Zinc
+advancedTools.configGui.advancedToolsOreGen.tin=Tin
+advancedTools.configGui.advancedToolsOreGen.nickel=Nickel
+
+advancedTools.configGui.advancedToolsOreGen.tooltip=
+advancedTools.configGui.advancedToolsOreGen.copper.tooltip=
+advancedTools.configGui.advancedToolsOreGen.zinc.tooltip=
+advancedTools.configGui.advancedToolsOreGen.tin.tooltip=
+advancedTools.configGui.advancedToolsOreGen.nickel.tooltip=
 
 item.flintPick.name=Flint Pickaxe
-item.ingotCopper.name=Copper Ingot
+item.ingotCopper.name=Copper Ingots
 item.ingotZinc.name=Zinc Ingot
 
 tile.advancedCraftingTable.name=Advanced Crafting Table

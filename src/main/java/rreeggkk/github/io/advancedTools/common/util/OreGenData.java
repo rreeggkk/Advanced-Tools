@@ -11,6 +11,19 @@ public class OreGenData {
 	private Block block;
 	
 	public OreGenData(){}
+	
+	
+	
+	public OreGenData(int maxHeight, int minHeight, int orePerVein, int veinPerChunk, Block block) {
+		this.maxHeight = maxHeight;
+		this.minHeight = minHeight;
+		this.orePerVein = orePerVein;
+		this.veinPerChunk = veinPerChunk;
+		this.block = block;
+	}
+
+
+
 	public int getMaxHeight() {
 		return maxHeight;
 	}

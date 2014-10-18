@@ -22,6 +22,7 @@ import rreeggkk.github.io.advancedTools.init.BlockBreakLevelModification;
 import rreeggkk.github.io.advancedTools.init.CraftingRecipies;
 import rreeggkk.github.io.advancedTools.init.RecipieRemoval;
 import rreeggkk.github.io.advancedTools.proxy.IProxy;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -46,14 +47,11 @@ public class AdvancedTools {
 	//Creative Tabs
 	public CustomCreativeTab cTab;
 
-	private OreGenData copperOreGen = new OreGenData(),
-			zincOreGen = new OreGenData();	
+	private OreGenData zincOreGen = new OreGenData();	
 	private RreeOreGenerator oreGenerator = new RreeOreGenerator();
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-		
+	public void preInit(FMLPreInitializationEvent event) {	
 		
 		cTab = new CustomCreativeTab("AdvancedTools");
 
@@ -67,17 +65,17 @@ public class AdvancedTools {
 		GameRegistry.registerBlock(AdvancedBlocks.oreCopper = new BasicBlock(Material.rock, "oreCopper", "oreCopper"), "oreCopper");
 		GameRegistry.registerBlock(AdvancedBlocks.oreZinc = new BasicBlock(Material.rock, "oreZinc", "oreZinc"), "oreZinc");
 
-		copperOreGen.setBlock(AdvancedBlocks.oreCopper);
-		copperOreGen.setMaxHeight(200);
-		copperOreGen.setMinHeight(30);
-		copperOreGen.setOrePerVein(14);
-		copperOreGen.setVeinPerChunk(20);
+		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+		
+		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+
 		zincOreGen.setBlock(AdvancedBlocks.oreZinc);
 		zincOreGen.setMaxHeight(64);
 		zincOreGen.setMinHeight(0);
 		zincOreGen.setOrePerVein(10);
 		zincOreGen.setVeinPerChunk(3);
-		oreGenerator.addOreGenToSurface(copperOreGen);
+		
+		oreGenerator.addOreGenToSurface(ConfigurationHandler.copperOreGen);
 		oreGenerator.addOreGenToSurface(zincOreGen);
 
 		GameRegistry.registerWorldGenerator(oreGenerator, 1);

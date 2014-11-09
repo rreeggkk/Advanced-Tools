@@ -57,15 +57,16 @@ public class ConfigurationHandler {
 				"The aproximate amount of veins per chunk", langKeyBase + category + ".VeinPerChunk"));
 	}
 	private static void loadDefaultOreGenData() {
-		copperOreGen = new OreGenData(200, 40, 14, 20, AdvancedBlocks.oreCopper);
-		zincOreGen = new OreGenData(100, 50, 24, 10, AdvancedBlocks.oreZinc);
-		tinOreGen = new OreGenData(120, 30, 8, 16, AdvancedBlocks.oreTin); 
-		nickelOreGen = new OreGenData(50, 16, 9, 6, AdvancedBlocks.oreNickel);
+		copperOreGen = new OreGenData(200, 40, 14, 10, AdvancedBlocks.oreCopper);
+		zincOreGen = new OreGenData(100, 50, 24, 5, AdvancedBlocks.oreZinc);
+		tinOreGen = new OreGenData(120, 30, 8, 8, AdvancedBlocks.oreTin); 
+		nickelOreGen = new OreGenData(50, 16, 9, 3, AdvancedBlocks.oreNickel);
 	}
 	@SubscribeEvent
 	public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.modID.equalsIgnoreCase(Constants.MODID)) {
 			syncConfigs();
+			AdvancedTools.instance.doInitOreGen();
 		}
 	}
 }

@@ -95,16 +95,17 @@ public class AdvancedTools {
 
 		BlockBreakLevelModification.init();
 
-		//oreGenerator.addOreGenToSurface(ConfigurationHandler.copperOreGen);
-		//oreGenerator.addOreGenToSurface(ConfigurationHandler.zincOreGen);
-		//oreGenerator.addOreGenToSurface(ConfigurationHandler.tinOreGen);
-		//oreGenerator.addOreGenToSurface(ConfigurationHandler.nickelOreGen);
+		doInitOreGen();
+
+		GameRegistry.registerWorldGenerator(oreGenerator, 1);
+	}
+	
+	public void doInitOreGen() {
+		oreGenerator.resetEntries();
 		addOreGenToSurface(ConfigurationHandler.copperOreGen);
 		addOreGenToSurface(ConfigurationHandler.zincOreGen);
 		addOreGenToSurface(ConfigurationHandler.tinOreGen);
-		addOreGenToSurface(ConfigurationHandler.nickelOreGen);
-
-		GameRegistry.registerWorldGenerator(oreGenerator, 1);
+		addOreGenToSurface(ConfigurationHandler.nickelOreGen);		
 	}
 
 	private void forceablyLoadTheForgeHooksClassSoThatICanTamperWithBlocks(){
@@ -112,7 +113,7 @@ public class AdvancedTools {
 	}
 	
 	private void addOreGenToSurface(OreGenData data) {
-		if (data.getEnabledType() == EnabledType.DISABLED || (data.getEnabledType() == EnabledType.DYNAMIC && OreDictionary.getOreIDs(new ItemStack(data.getBlock())).length > 1)) {
+		if (data.getEnabledType() == EnabledType.DISABLED) {
 			return;
 		}
 		oreGenerator.addOreGenToSurface(data);

@@ -72,4 +72,7 @@ public class RreeOreGenerator implements IWorldGenerator{
 			(new WorldGenMinable(block, maxVeinSize)).generate(world, random, posX, posY, posZ);
 		}
 	}
+	public void resetEntries() {
+		oreGenListS.clear();
+	}
 }
